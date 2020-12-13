@@ -1,31 +1,46 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+  FlatList,
+} from "react-native";
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState('')
-  const [courseGoals, setCourseGoals] = useState([])
+  const [enteredGoal, setEnteredGoal] = useState("");
+  const [courseGoals, setCourseGoals] = useState([]);
 
- const goalInputHandler = (enteredText)=>{
-   setEnteredGoal(enteredText)
- }
-const addGoalHandler = () => {
-  setCourseGoals(currentGoals=> [...currentGoals, enteredGoal])
-}
+  const goalInputHandler = (enteredText) => {
+    setEnteredGoal(enteredText);
+  };
+  const addGoalHandler = () => {
+    setCourseGoals((currentGoals) => [...currentGoals, {id:Math.random().toString(), value: enteredGoal}]);
+  };
   return (
     <View style={styles.root}>
-      <View
-        style={styles.inputContainer}
-      >
-        <TextInput placeholder="Add your goal" style={styles.textInputStyle} onChangeText = {goalInputHandler}
-        value = {enteredGoal} />
-        <Button title="Add"
-        onPress = {addGoalHandler} />
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Add your goal"
+          style={styles.textInputStyle}
+          onChangeText={goalInputHandler}
+          value={enteredGoal}
+        />
+        <Button title="Add" onPress={addGoalHandler} />
       </View>
 
-      <ScrollView>
-        {courseGoals.map((goal)=> <View key ={goal} style ={styles.listItem}><Text>{goal}</Text></View>)}
-      </ScrollView>
+      <FlatList
+      keyExtractor = {(item,index)=> item.id}
+        data={courseGoals}
+        renderItem={(itemdata) => itemdata.item.value (
+          <View style={styles.listItem}>
+            <Text>{itemdata.item.value}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 }
@@ -35,7 +50,7 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   textInputStyle: {
-    width: '80%',
+    width: "80%",
     borderBottomColor: "black",
     borderWidth: 1,
     padding: 10,
@@ -48,8 +63,8 @@ const styles = StyleSheet.create({
   listItem: {
     padding: 10,
     marginVertical: 10,
-    backgroundColor: '#ccc',
-    borderColor: 'black',
-    borderWidth: 1
-  }
+    backgroundColor: "#ccc",
+    borderColor: "black",
+    borderWidth: 1,
+  },
 });
