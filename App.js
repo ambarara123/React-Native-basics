@@ -35,7 +35,7 @@ export default function App() {
       <FlatList
       keyExtractor = {(item,index)=> item.id}
         data={courseGoals}
-        renderItem={(itemdata) => itemdata.item.value (
+        renderItem={itemdata => (
           <View style={styles.listItem}>
             <Text>{itemdata.item.value}</Text>
           </View>
