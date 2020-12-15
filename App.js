@@ -22,7 +22,7 @@ export default function App() {
       keyExtractor = {(item,index)=> item.id}
         data={courseGoals}
         renderItem={itemdata => 
-          <GoalItem title = {itemdata.item.title}/>
+          <GoalItem title = {itemdata.item.title} onDelete = {() => console.log('this is working')}/>
         }
       />
     </View>
